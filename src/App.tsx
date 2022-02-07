@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback } from "react";
+import "./App.scss";
+import Button from "./components/button/Button";
+import Counter from "./components/counter/Counter";
+import SubTitle from "./components/subTitle/SubTitle";
+import Title from "./components/Title/Title";
 
 function App() {
+  const [countA, setCountA] = useState<number>(0);
+  const [countB, setCountB] = useState<number>(0);
+
+  // useCallbackでメモ化
+  const handleCountUpA = useCallback(() => {
+    setCountA((preveCount) => preveCount + 1);
+  }, []);
+
+  const handleCountUpB = useCallback(() => {
+    setCountB((preveCount) => preveCount + 1);
+  }, []);
+
+  console.log("------------");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Title titleText={"#6 useCallback"} />
+      <SubTitle subTitleText={"緊急アンケート：あなたはA派？そっれともB派？"} />
+      <div className="itemList">
+        <div className="item">
+          <Counter counterTitle={"A派"} count={countA} />
+          <Button buttonText={"もちろんA派!"} onClick={handleCountUpA} />
+        </div>
+        <div className="item">
+          <Counter counterTitle={"B派"} count={countB} />
+          <Button buttonText={"もちろんB派!"} onClick={handleCountUpB} />
+        </div>
+      </div>
     </div>
   );
 }
